@@ -14,3 +14,4 @@ Tech Stack:
 - MySQL
 - Passlib (bcrypt)
 - Pydantic
+- Streamlit
