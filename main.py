@@ -11,10 +11,11 @@ app = FastAPI()
 
 def get_connection():
     return mysql.connector.connect(
-        host = "localhost",
-        user = "root",
-        password = "atul@2006",
-        database = "User_data"
+        host=os.getenv("MYSQLHOST"),
+        user=os.getenv("MYSQLUSER"),
+        password=os.getenv("MYSQLPASSWORD"),
+        database=os.getenv("MYSQLDATABASE"),
+        port=os.getenv("MYSQLPORT")
     )
 
 class Register(BaseModel):
