@@ -79,9 +79,9 @@ def user_register(register: Register):
         cursor.execute(query, values)
         conn.commit()
 
-        return {"Status" : "Registration Successfull!"}
+        return {"message" : "Registration Successfull!"}
     except Exception as e:
-        return {"Error" : str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post('/login')
@@ -97,17 +97,17 @@ def login(user : Login):
             raise HTTPException(status_code=400, detail="Email not found")
 
         if pwd_context.verify(user.password, rows["password"]):
-            return {"Status" : "Login Successfull!"}
+            return {"message" : "Login Successfull!"}
         
         # row = rows[0]
         # if row["email"] == user.email and row["password"] == user.password:
         #     return {"Status" : "Login successfull...!"}
             
-        return {"Status" : "Invalid Credential..! Check Your Password"}
+        return {"message" : "Invalid Credential..! Check Your Password"}
         
 
     except Exception as e:
-        return {"Detail" : str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
     
     
 
@@ -143,7 +143,7 @@ def reset_password(reset : Reset):
         cursor.execute(query2, value2)
         conn.commit()
 
-        return {'Result' : 'Passwod is changed'}
+        return {'message' : 'Passwod is changed'}
 
 
     except Exception as e:
@@ -158,7 +158,7 @@ def remove_acc(rem : Remove):
         cursor.execute('DELETE FROM user_register WHERE email=%s', (rem.email,))
         conn.commit()
 
-        return {'Result' : 'Account deleted'}
+        return {'message' : 'Account deleted'}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -201,10 +201,10 @@ async def upload_file(email: str = Form(...), file : UploadFile = File(...)):
 
         conn.commit()
 
-        return {"status": "File uploaded successfully", "path": file_path}
+        return {"message": "File uploaded successfully", "path": file_path}
     
     except Exception as e:
-        return {"Error" : str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 
@@ -216,10 +216,10 @@ def check_conn():
         cursor = conn.cursor(dictionary=True)
 
         cursor.execute('SELECT 1')
-        return {"status" : "Database connected"}
+        return {"message" : "Database connected"}
     
     except:
-        return {"status" : "Database did not connect"}
+        return {"message" : "Database did not connect"}
     
 
     
