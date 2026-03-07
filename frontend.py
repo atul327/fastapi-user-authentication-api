@@ -10,7 +10,7 @@ def load_css():
 
 load_css()
 
-API_URL = "http://127.0.0.1:8000"
+API_URL = "https://fastapi-user-authentication-api-production.up.railway.app"
 
 st.markdown('<div class="main-card">', unsafe_allow_html=True)
 st.markdown('<div class="title-text">🔐 User Management System</div>', unsafe_allow_html=True)
