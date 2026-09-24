@@ -29,3 +29,18 @@ def test_upload_file_success():
     assert response.status_code == 200
 
     assert response.json()["message"] == "File uploaded successfully"
+
+# for checking database connection
+def test_check_connection_success():
+    fake_cursor = MagicMock()
+
+    fake_connection = MagicMock()
+    fake_connection.cursor.return_value = fake_cursor
+
+    with patch("main.get_connection", return_value=fake_connection):
+        response = client.get("/check")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "message": "Database connected"
+    }
