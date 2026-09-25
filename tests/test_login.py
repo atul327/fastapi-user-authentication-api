@@ -29,3 +29,21 @@ def test_login_success():
     assert response.json() == {
         "message": "Login Successfull!"
     }
+
+def test_email_validation():
+    fake_cursor = MagicMock()
+    fake_cursor.fetchone.return_value = None
+
+    fake_connection = MagicMock()
+    fake_connection.cursor.return_value = fake_cursor
+
+    with patch("main.get_connection", return_value = fake_connection):
+        response = client.post(
+            "/login",
+            json={
+                "email": "atul@gmail.com",
+                "password": "atul@123"
+            }
+        )
+
+        assert response.status_code == 500
