@@ -62,7 +62,7 @@ def user_register(register: Register):
         cursor.execute("SELECT * FROM user_register WHERE email = %s", (register.email,))
 
         if cursor.fetchone():
-            raise HTTPException(status_code=400, detail="Email already exixts")
+            raise HTTPException(status_code=500, detail="Email already exixts")
         
         hashed_pass = pwd_context.hash(register.password)
         
@@ -80,6 +80,9 @@ def user_register(register: Register):
         conn.commit()
 
         return {"message" : "Registration Successfull!"}
+    
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
